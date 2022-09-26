@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./RegisterStyle.css";
+
 export default function Register() {
     const [data, setData] = useState({
         email: "",
@@ -16,8 +18,13 @@ export default function Register() {
         const sendData = {
             email: data.email,
             password: data.password,
-            role: data.role,
         };
+        axios.post("http://localhost:3000/register", sendData)
+            .then((res) => {
+                console.log(res);
+                console.log(sendData)
+            })
+            .catch((err) => console.log(err));
     };
     return (
         <div className="main-box">
@@ -54,23 +61,33 @@ export default function Register() {
                         <div>
                             <input
                                 type="radio"
-                                id="candidate"
+                                id="structure"
                                 name="role"
                                 onChange={handleChange}
-                                value={"ROLE_CANDIDATE"}
+                                value={"STRUCTURE"}
                             />
-                            <label for="candidate">candidat</label>
+                            <label for="structure">candidat</label>
                         </div>
 
                         <div>
                             <input
                                 type="radio"
-                                id="recruit"
+                                id="partenaire"
                                 name="role"
                                 onChange={handleChange}
-                                value={"ROLE_RECRUIT"}
+                                value={"PARTENAIRE"}
                             />
-                            <label for="recruit">recruteur</label>
+                            <label for="partenaire">recruteur</label>
+                        </div>
+                        <div>
+                            <input
+                                type="radio"
+                                id="admin"
+                                name="role"
+                                onChange={handleChange}
+                                value={"ADMIN"}
+                            />
+                            <label for="admin">admin</label>
                         </div>
                     </fieldset>
                     <div className="row">
