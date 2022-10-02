@@ -18,11 +18,13 @@ export default function Register() {
         const sendData = {
             email: data.email,
             password: data.password,
+            role: data.role,
         };
-        axios.post("http://localhost:3000/register", sendData)
+        axios
+            .post("http://localhost:3000/register", sendData)
             .then((res) => {
                 console.log(res);
-                console.log(sendData)
+                console.log(sendData);
             })
             .catch((err) => console.log(err));
     };

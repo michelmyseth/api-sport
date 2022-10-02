@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const jwt = require("jsonwebtoken");
 var cors = require("cors");
 
 const mysql = require("mysql2");
@@ -14,7 +15,7 @@ const db = mysql.createConnection({
     database: "api",
 });
 
-app.use(cors());
+app.use(express.json(), cors());
 
 app.get("/app", (req, res) => {
     db.query(
@@ -29,10 +30,13 @@ app.get("/app", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    console.log("test");
-    console.log(req.body);
+    const data = req.body;
+    console.log(data.email, data.password, "TRUE");
     db.query(
-        'INSERT INTO users (user_mail, user_password, user_role, user_active) VALUES ("michel","qwewq","partner","TRUE")',
+        "INSERT INTO users (user_mail, user_password, user_role, user_active) VALUES "(
+            [data.email, data.password, data.role],
+            "TRUE"
+        ),
         (err, result) => {
             if (err) {
                 console.log(err);
